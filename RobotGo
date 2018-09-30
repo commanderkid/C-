@@ -1,0 +1,71 @@
+namespace Mazes
+{
+	public static class DiagonalMazeTask
+	{
+		public static void MoveOut(Robot robot, int width, int height)
+		{
+            char sideComporatorBiggest = 'w';
+            int widthRight = width - 2, heightDown = height - 2;
+            int counter = RelateGo(width, height, ref sideComporatorBiggest);
+            if (sideComporatorBiggest == 'w')
+                MoveWidthBiggeringGo(robot, counter, widthRight, heightDown);
+            else
+                MoveHeightBiggeringGo(robot, counter, widthRight, heightDown);
+        }
+
+        public static int RelateGo(int width, int height, ref char sideComporatorBiggest)
+        {
+            if (width >= height)
+                return (width - 2) / (height - 2);
+            else
+            {
+                sideComporatorBiggest = 'h';
+                return (height - 2) / (width - 2);
+            }
+        }
+
+        public static void MoveWidthBiggeringGo(Robot robot, int counter, int widthRight, int heightDown)
+        {
+            while(!(widthRight == 1 && heightDown == 1))
+            {
+                MooveRight(robot, counter, ref widthRight);
+                MooveDown(robot, 1, ref heightDown);
+            }
+            MooveRight(robot, 1, ref widthRight);
+        }
+
+        public static void MoveHeightBiggeringGo(Robot robot, int counter, int widthRight, int heightDown)
+        {
+            while (!(widthRight == 1 && heightDown == 1))
+            {
+                MooveDown(robot, counter, ref heightDown);
+                MooveRight(robot, 1, ref widthRight);
+            }
+            MooveDown(robot, 1, ref heightDown);
+        }
+
+        public static void MooveRight(Robot robot, int counter, ref int widthRight)
+        {
+            for(int i = 0; i < counter; i++)
+            {
+                if (widthRight > 1)
+                {
+                    robot.MoveTo(Direction.Right);
+                    widthRight--;
+                }
+            }
+        }
+
+        public static void MooveDown(Robot robot, int counter, ref int heightDown)
+        {
+            for (int i = 0; i < counter; i++)
+            {
+                if (heightDown > 1)
+                {
+                    robot.MoveTo(Direction.Down);
+                    heightDown--;
+                }
+            }
+        }
+    }
+}
